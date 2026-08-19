@@ -5,7 +5,7 @@ on:
     branches: ["main"]
 
 jobs:
-  config:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - name: Baixar Código do Repositório
@@ -19,32 +19,21 @@ jobs:
       - name: Instalar dependências
         run: pip install pytest
 
-  test_adicao:
-    needs: config
-    steps:
       - name: Testar adição
         run: pytest tests/test_adicao.py
   
-  test_subtracao:
-    needs: config
-    steps:
       - name: Testar subtração
         run: pytest tests/test_subtracao.py
   
-  test_multiplicacao:
-    needs: config
-    steps:
       - name: Testar multiplicação
         run: pytest tests/test_multiplicacao.py
 
-  test_divisao:
-    needs: config
-    steps:
       - name: Testar divisão
         run: pytest tests/test_divisao.py
   
   deploy:
-    needs: test_adicao, test_subtracao, test_multiplicacao, test_divisao
+    needs: tests
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Deploy realizado"
+      - name: Executar Deploy
+        run: echo "Deploy realizado"
