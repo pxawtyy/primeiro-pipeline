@@ -22,7 +22,7 @@ jobs:
           node-version: '24'
 
       - name: Instalar dependências
-        run: pip install pytest && npm install --save-dev jest
+        run: pip install pytest && npm install -g jest
 
       - name: Testar adição
         run: pytest tests/python/test_adicao.py && jest tests/javascript/testAdicao.test.js
