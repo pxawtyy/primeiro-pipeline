@@ -56,7 +56,7 @@ jobs:
         run: pip install flake8 && npm init @eslint/config@latest
       
       - name: Rodar lint
-        run: flake8 tests/python && npx eslint tests/javascript
+        run: flake8 tests/python && eslint . --ext .js,.jsx,.ts,.tsx
 
   deploy:
     needs: tests

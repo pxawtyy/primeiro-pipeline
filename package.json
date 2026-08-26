@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/pxawtyy/primeiro-pipeline/issues"
   },
-  "homepage": "https://github.com/pxawtyy/primeiro-pipeline#readme"
+  "homepage": "https://github.com/pxawtyy/primeiro-pipeline#readme",
+  "dependencies": {
+    "eslint": "^10.9.1"
+  }
 }
