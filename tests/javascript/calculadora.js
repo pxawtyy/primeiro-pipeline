@@ -10,8 +10,8 @@ function dividir (a, b) {
     return a / b;
 };
 
-function multiplicacao (a, b) {
+function multiplicar (a, b) {
     return a * b;
 };
 
-module.exports = { somar, subtrair, dividir, multiplicacao };
+module.exports = { somar, subtrair, dividir, multiplicar };
