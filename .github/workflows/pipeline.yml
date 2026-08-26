@@ -36,6 +36,28 @@ jobs:
       - name: Testar divisão
         run: pytest tests/python/test_divisao.py && jest tests/javascript/testDividir.test.js
   
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar Código do Repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Configurar ambiente Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      
+      - name: Instalar dependências
+        run: pip install flake8 && npm init @eslint/config@latest
+      
+      - name: Rodar lint
+        run: flake8 tests/python && npx eslint tests/javascript
+
   deploy:
     needs: tests
     runs-on: ubuntu-latest
