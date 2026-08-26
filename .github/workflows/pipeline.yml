@@ -53,10 +53,10 @@ jobs:
           node-version: '24'
       
       - name: Instalar dependências
-        run: pip install flake8 && npm init @eslint/config@latest
+        run: pip install flake8
       
       - name: Rodar lint
-        run: flake8 tests/python && eslint . --ext .js,.jsx,.ts,.tsx
+        run: flake8 tests/python && npx eslint . --ext .js,.jsx,.ts,.tsx
 
   deploy:
     needs: tests
