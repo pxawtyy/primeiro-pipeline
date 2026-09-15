@@ -1,10 +1,8 @@
-import { defineConfig } from "eslint";
-
-export default defineConfig([
-	{
-		rules: {
-			semi: "error",
-			"prefer-const": "error",
-		},
-	},
-]);
+module.exports = [
+  {
+    rules: {
+      semi: "error",
+      "prefer-const": "error",
+    },
+  },
+];

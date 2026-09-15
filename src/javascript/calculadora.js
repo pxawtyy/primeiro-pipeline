@@ -14,6 +14,6 @@ function multiplicar (a, b) {
     return a * b;
 };
 
-const teste = 0
+const teste = 0;
 
 module.exports = { somar, subtrair, dividir, multiplicar };
