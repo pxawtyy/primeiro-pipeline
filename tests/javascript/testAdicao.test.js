@@ -1,4 +1,4 @@
-const { somar } = require("./calculadora.js");
+const { somar } = require("../../src/javascript/calculadora.js");
 
 describe('Teste de Calculadora', () => {
     test('deve somar 1 + 2 e retornar 3', () => {

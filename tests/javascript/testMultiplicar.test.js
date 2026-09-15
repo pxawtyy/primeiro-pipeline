@@ -1,4 +1,4 @@
-const { multiplicar } = require("./calculadora.js");
+const { multiplicar } = require("../../src/javascript/calculadora.js");
 
 describe('Teste de Calculadora', () => {
     test('deve multiplicar 2 * 2 e retornar 4', () => {

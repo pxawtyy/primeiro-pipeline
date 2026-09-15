@@ -1,4 +1,4 @@
-const { subtrair } = require("./calculadora.js");
+const { subtrair } = require("../../src/javascript/calculadora.js");
 
 describe('Teste de Calculadora', () => {
     test('deve subtrair 2 - 1 e retornar 1', () => {

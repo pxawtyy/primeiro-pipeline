@@ -1,4 +1,4 @@
-import calculadora
+from src.python import calculadora
 
 
 def testar_soma():
