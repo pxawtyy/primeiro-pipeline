@@ -3,9 +3,13 @@ name: Primeira Pipeline
 on:
   push:
     branches: ["main"]
+  pull_request:
+    branches: ["main"]
+    types: [opened, synchronize, reopened]
 
 jobs:
   tests:
+    name: Testes Unitários & Cobertura
     runs-on: ubuntu-latest
     steps:
       - name: Baixar Código do Repositório
@@ -22,21 +26,47 @@ jobs:
           node-version: '24'
 
       - name: Instalar dependências
-        run: pip install pytest && npm install -g jest
+        run: |
+          pip install -r requirements-dev.txt
+          npm install
 
-      - name: Testar adição
-        run: pytest tests/python/test_adicao.py && jest tests/javascript/testAdicao.test.js
-  
-      - name: Testar subtração
-        run: pytest tests/python/test_subtracao.py && jest tests/javascript/testSubtrair.test.js
-  
-      - name: Testar multiplicação
-        run: pytest tests/python/test_multiplicacao.py && jest tests/javascript/testMultiplicar.test.js
+      - name: Executar testes Python com Cobertura
+        run: pytest --cov=src/python --cov-report=xml:coverage-python.xml
 
-      - name: Testar divisão
-        run: pytest tests/python/test_divisao.py && jest tests/javascript/testDividir.test.js
-  
+      - name: Executar testes JavaScript com Cobertura
+        run: npm run test:coverage
+
+      - name: Salvar Relatórios de Cobertura
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-reports
+          path: |
+            coverage-python.xml
+            coverage/lcov.info
+
+  sonarcloud:
+    name: Análise de Qualidade (SonarCloud)
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar Código do Repositório (Histórico Completo)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Baixar Relatórios de Cobertura
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-reports
+
+      - name: Executar Análise SonarCloud
+        uses: SonarSource/sonarcloud-github-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   lint:
+    name: Verificação de Estilo (Lint)
     runs-on: ubuntu-latest
     steps:
       - name: Baixar Código do Repositório
@@ -53,13 +83,14 @@ jobs:
           node-version: '24'
       
       - name: Instalar dependências
-        run: pip install flake8 && npm install
+        run: pip install -r requirements-dev.txt && npm install
       
       - name: Rodar lint
-        run: flake8 src/python tests/python && npx eslint .
+        run: flake8 src/python tests/python && npm run lint
 
   deploy:
-    needs: tests
+    name: Deploy
+    needs: [tests, sonarcloud, lint]
     runs-on: ubuntu-latest
     steps:
       - name: Executar Deploy
