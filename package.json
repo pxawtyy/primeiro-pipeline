@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/pxawtyy/primeiro-pipeline#readme",
   "devDependencies": {
-    "eslint": "^10.9.1",
+    "eslint": "^10.10.0",
     "jest": "^30.5.1"
   },
   "dependencies": {
