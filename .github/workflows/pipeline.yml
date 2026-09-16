@@ -79,6 +79,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  audit:
+    name: Verificação de Vulnerabilidades (npm audit)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar Código do Repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar ambiente Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Verificar vulnerabilidades
+        run: npm audit --audit-level=high
+
   lint:
     name: Verificação de Estilo (Lint)
     runs-on: ubuntu-latest
@@ -104,7 +119,7 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: [tests, sonarcloud, gitleaks, lint]
+    needs: [tests, sonarcloud, gitleaks, audit, lint]
     runs-on: ubuntu-latest
     steps:
       - name: Executar Deploy
