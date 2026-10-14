@@ -1,0 +1,11 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.git
+.github
+node_modules
+.pytest_cache
+.coverage
+coverage
+coverage-python.xml
